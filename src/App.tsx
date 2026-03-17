@@ -3,6 +3,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import CustomCursor from './components/core/CustomCursor';
 import LenisProvider from './components/core/LenisProvider';
+import AmbientBackdrop from './components/ui/AmbientBackdrop';
 import NoiseOverlay from './components/ui/NoiseOverlay';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
@@ -21,25 +22,26 @@ function App() {
 
   return (
     <LenisProvider>
-      <NoiseOverlay />
-      <CustomCursor />
-      <Navbar />
-      
-      {/* Container pentru rute cu AnimatePresence */}
-      <AnimatePresence mode="wait">
-        <Suspense fallback={<RouteFallback />}>
-          <Routes location={location} key={location.pathname}>
-            <Route path="/" element={<Home />} />
-            <Route path="/portofoliu" element={<Portofoliu />} />
-            <Route path="/despre" element={<Despre />} />
-            <Route path="/contact" element={<Contact />} />
-            {/* Servicii rutează spre Despre pentru exemplificare */}
-            <Route path="/servicii" element={<Despre />} /> 
-          </Routes>
-        </Suspense>
-      </AnimatePresence>
-
-      <Footer />
+      <div className="page-shell min-h-screen bg-aerflow-dark text-aerflow-light">
+        <AmbientBackdrop />
+        <NoiseOverlay />
+        <CustomCursor />
+        <Navbar />
+        <main className="relative z-10">
+          <AnimatePresence mode="wait">
+            <Suspense fallback={<RouteFallback />}>
+              <Routes location={location} key={location.pathname}>
+                <Route path="/" element={<Home />} />
+                <Route path="/portofoliu" element={<Portofoliu />} />
+                <Route path="/despre" element={<Despre />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/servicii" element={<Despre />} />
+              </Routes>
+            </Suspense>
+          </AnimatePresence>
+        </main>
+        <Footer />
+      </div>
     </LenisProvider>
   );
 }

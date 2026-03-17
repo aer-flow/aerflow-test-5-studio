@@ -11,7 +11,7 @@ export default function CustomCursor() {
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
 
-  const springConfig = { damping: 20, stiffness: 400, mass: 0.5 }; // Stiffened for better tracking
+  const springConfig = { damping: 20, stiffness: 400, mass: 0.5 };
   const smoothX = useSpring(cursorX, springConfig);
   const smoothY = useSpring(cursorY, springConfig);
 
@@ -38,59 +38,118 @@ export default function CustomCursor() {
     };
   }, [cursorX, cursorY, isMobile]);
 
-  // Don't render anything on mobile
   if (isMobile) return null;
 
-  const variants = {
+  const ringVariants = {
     default: {
-      width: 16,
-      height: 16,
-      backgroundColor: '#F2F2F2',
-      boxShadow: '0 0 10px rgba(255,255,255,0.3)',
+      width: 44,
+      height: 44,
+      borderColor: 'rgba(245,242,235,0.45)',
+      backgroundColor: 'rgba(255,255,255,0.03)',
+      scale: 1,
       opacity: 1,
     },
     project: {
-      width: 150,
-      height: 150,
+      width: 128,
+      height: 128,
+      borderColor: 'rgba(215,255,107,0.7)',
+      backgroundColor: 'rgba(215,255,107,0.12)',
+      scale: 1,
+      opacity: 1,
+    },
+    menu: {
+      width: 86,
+      height: 86,
+      borderColor: 'rgba(245,242,235,0.6)',
+      backgroundColor: 'rgba(255,255,255,0.08)',
+      scale: 1,
+      opacity: 1,
+    },
+    hidden: {
+      width: 24,
+      height: 24,
+      scale: 0.2,
+      opacity: 0,
+    }
+  };
+
+  const coreVariants = {
+    default: {
+      width: 6,
+      height: 6,
+      backgroundColor: '#F5F2EB',
+      opacity: 1,
+    },
+    project: {
+      width: 10,
+      height: 10,
       backgroundColor: '#D7FF6B',
       opacity: 1,
     },
     menu: {
-      width: 60,
-      height: 60,
-      backgroundColor: '#F2F2F2',
+      width: 8,
+      height: 8,
+      backgroundColor: '#F5F2EB',
       opacity: 1,
     },
     hidden: {
       width: 0,
       height: 0,
       opacity: 0,
-    }
+    },
   };
 
   return (
     <motion.div
-      className="fixed top-0 left-0 z-[9999] rounded-full pointer-events-none flex items-center justify-center overflow-hidden"
+      aria-hidden="true"
+      className="fixed top-0 left-0 z-[9999] pointer-events-none"
       style={{
         left: smoothX,
         top: smoothY,
         translateX: "-50%",
         translateY: "-50%",
       }}
-      initial="hidden"
-      animate={isVisible ? variant : "hidden"}
-      variants={variants}
-      transition={{ type: "tween", ease: "backOut", duration: 0.3 }}
     >
-      {variant === 'project' && (
-        <motion.span 
-          initial={{ opacity: 0, scale: 0.5 }} 
-          animate={{ opacity: 1, scale: 1 }} 
-          className="text-aerflow-dark font-sans font-bold text-sm tracking-widest"
-        >
-          {text || 'VEZI'}
-        </motion.span>
-      )}
+      <motion.div
+        className="absolute rounded-full border backdrop-blur-[2px]"
+        initial="hidden"
+        animate={isVisible ? variant : 'hidden'}
+        variants={ringVariants}
+        transition={{ type: 'spring', stiffness: 260, damping: 22, mass: 0.8 }}
+        style={{ boxShadow: '0 0 40px rgba(0,0,0,0.16)' }}
+      />
+      <motion.div
+        className="absolute rounded-full"
+        initial="hidden"
+        animate={isVisible ? variant : 'hidden'}
+        variants={coreVariants}
+        transition={{ type: 'spring', stiffness: 320, damping: 26, mass: 0.7 }}
+      />
+      <motion.div
+        className="absolute rounded-full blur-2xl"
+        animate={isVisible && variant !== 'hidden' ? { opacity: 0.45, scale: 1 } : { opacity: 0, scale: 0.4 }}
+        transition={{ duration: 0.25, ease: 'easeOut' }}
+        style={{
+          width: variant === 'project' ? 140 : variant === 'menu' ? 92 : 56,
+          height: variant === 'project' ? 140 : variant === 'menu' ? 92 : 56,
+          background:
+            variant === 'project'
+              ? 'radial-gradient(circle, rgba(215,255,107,0.28), rgba(215,255,107,0) 72%)'
+              : 'radial-gradient(circle, rgba(255,255,255,0.18), rgba(255,255,255,0) 72%)',
+        }}
+      />
+      <motion.span
+        initial={{ opacity: 0, scale: 0.8, y: 8 }}
+        animate={
+          variant === 'project' || variant === 'menu'
+            ? { opacity: 1, scale: 1, y: 0 }
+            : { opacity: 0, scale: 0.84, y: 8 }
+        }
+        transition={{ duration: 0.2, ease: 'easeOut' }}
+        className="absolute rounded-full border border-white/10 bg-black/55 px-3 py-1 font-mono text-[10px] tracking-[0.24em] text-aerflow-light uppercase"
+      >
+        {text || (variant === 'menu' ? 'OPEN' : 'VIEW')}
+      </motion.span>
     </motion.div>
   );
 }

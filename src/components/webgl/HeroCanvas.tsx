@@ -26,14 +26,18 @@ function FluidPlane() {
     <mesh scale={[viewport.width, viewport.height, 1]}>
       <planeGeometry args={[1, 1, 16, 16]} />
       {/* @ts-expect-error - extended in FluidDistortionMaterial.tsx */}
-      <fluidDistortionMaterial ref={materialRef} uColorBase={new THREE.Color('#070707')} uColorHighlight={new THREE.Color('#1a1a1a')} />
+      <fluidDistortionMaterial
+        ref={materialRef}
+        uColorBase={new THREE.Color('#050505')}
+        uColorHighlight={new THREE.Color('#18200b')}
+      />
     </mesh>
   );
 }
 
 function MobileHeroFallback() {
   return (
-    <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#070707] via-[#0d0d0d] to-[#070707]" />
+    <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_20%_18%,rgba(215,255,107,0.12),transparent_26%),radial-gradient(circle_at_80%_10%,rgba(120,132,255,0.12),transparent_24%),linear-gradient(135deg,#070707,#0d0d0d_52%,#050505)]" />
   );
 }
 
@@ -67,7 +71,7 @@ export default function HeroCanvas() {
       >
         <FluidPlane />
       </Canvas>
-      <div className="absolute inset-0 bg-aerflow-dark/20" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent,rgba(0,0,0,0.35)_72%),linear-gradient(180deg,rgba(0,0,0,0.08),rgba(0,0,0,0.38))]" />
     </div>
   );
 }
