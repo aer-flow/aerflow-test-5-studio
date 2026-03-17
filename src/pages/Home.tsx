@@ -47,21 +47,6 @@ const projects = [
   }
 ];
 
-const chapterSignals = [
-  {
-    title: 'Arrival',
-    text: 'Prima secțiune trebuie să seteze tensiune, atmosferă și direcție înainte să explice.',
-  },
-  {
-    title: 'Flow',
-    text: 'Tranzițiile și accentele fac capitolele să pară legate între ele, nu doar stivuite.',
-  },
-  {
-    title: 'Memory',
-    text: 'Fiecare zonă are un mic twist: un framing, o lumină, un gest de interacțiune memorabil.',
-  },
-];
-
 const manifestoNotes = [
   'Sistem vizual coerent între toate paginile.',
   'Mișcare subtilă care susține ierarhia, nu o distrage.',
@@ -225,16 +210,16 @@ export default function Home() {
   return (
     <PageTransition>
       <div className="relative w-full overflow-hidden">
-        <section className="relative flex min-h-[100svh] items-end overflow-hidden pt-28 pb-4 md:items-center md:pt-32 md:pb-8">
+        <section className="relative flex min-h-[100svh] items-end overflow-hidden pt-24 pb-4 md:items-center md:pt-28 md:pb-6">
           <Suspense fallback={<HeroFallback />}>
             <HeroCanvas />
           </Suspense>
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,4,4,0.35),rgba(4,4,4,0.72)_58%,rgba(4,4,4,0.96))]" />
 
           <div className="section-shell relative z-10 w-full">
-            <div className="story-frame story-grid rounded-[2rem] px-5 py-6 md:rounded-[2.6rem] md:px-10 md:py-10">
-              <div className="grid gap-10 md:grid-cols-[1.2fr_0.8fr] md:gap-12">
-                <div className="space-y-8">
+            <div className="story-frame story-grid rounded-[2rem] px-5 py-5 md:rounded-[2.6rem] md:px-10 md:py-8">
+              <div className="grid gap-8 md:grid-cols-[1.12fr_0.88fr] md:gap-10">
+                <div className="space-y-6">
                   <div className="flex flex-wrap gap-3">
                     <div className="story-chip">Chapter 01 / Arrival</div>
                     <div className="rounded-full border border-white/10 px-4 py-2 font-mono text-[10px] tracking-[0.22em] text-aerflow-light/70 uppercase">
@@ -243,7 +228,7 @@ export default function Home() {
                   </div>
 
                   <div className="max-w-4xl">
-                    <h1 className="text-[clamp(3.25rem,9vw,10rem)] font-bold uppercase leading-[0.88] tracking-[-0.06em] text-aerflow-light">
+                    <h1 className="text-[clamp(2.8rem,7.4vw,7.8rem)] font-bold uppercase leading-[0.9] tracking-[-0.06em] text-aerflow-light">
                       <motion.span
                         initial={{ y: 110, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
@@ -273,17 +258,17 @@ export default function Home() {
 
                   <div className="ambient-divider max-w-xl" />
 
-                  <p className="max-w-xl text-base leading-relaxed text-aerflow-light/74 md:text-lg">
+                  <p className="max-w-xl text-sm leading-relaxed text-aerflow-light/74 md:text-base">
                     Aerflow construiește experiențe digitale care par orchestrate: cu atmosferă,
                     claritate și micro-detalii care transformă fiecare scroll într-o secvență
                     memorabilă.
                   </p>
                 </div>
 
-                <div className="flex flex-col justify-between gap-8">
-                  <div className="space-y-4 md:pt-8">
+                <div className="flex flex-col justify-between gap-6">
+                  <div className="space-y-3 md:pt-4">
                     <div className="story-label">Designed like a journey</div>
-                    <p className="max-w-md text-lg leading-relaxed text-aerflow-light/78">
+                    <p className="max-w-md text-base leading-relaxed text-aerflow-light/78">
                       De la primul cadru până la ultimul CTA, fiecare secțiune trebuie să surprindă,
                       să ghideze și să dea senzația unui obiect digital făcut cu intenție.
                     </p>
@@ -291,19 +276,47 @@ export default function Home() {
 
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div className="story-frame rounded-[1.6rem] px-5 py-5">
-                      <div className="mb-2 font-mono text-[10px] tracking-[0.24em] text-aerflow-gray uppercase">
-                        Atmosphere
+                      <div className="mb-3 flex items-center justify-between gap-3">
+                        <div className="font-mono text-[10px] tracking-[0.24em] text-aerflow-gray uppercase">
+                          Ambient frame
+                        </div>
+                        <div className="font-mono text-[10px] tracking-[0.24em] text-aerflow-accent uppercase">
+                          Live
+                        </div>
+                      </div>
+                      <div className="relative mb-4 h-18 overflow-hidden rounded-[1.1rem] border border-white/8 bg-black/35">
+                        <div className="absolute inset-3 rounded-[0.9rem] border border-white/8" />
+                        <div className="absolute left-4 top-1/2 h-16 w-16 -translate-y-1/2 rounded-full bg-aerflow-accent/15 animate-[ambientFloat_7s_ease-in-out_infinite]" />
+                        <div className="absolute right-4 top-4 h-5 w-5 rounded-md border border-white/14 bg-white/5 animate-[ambientDrift_9s_ease-in-out_infinite]" />
                       </div>
                       <p className="text-sm leading-relaxed text-aerflow-light/74">
-                        Fundal viu, lumină, textură și profunzime în locul unui canvas plat.
+                        Cadre, glow subtil și straturi de fundal deja active chiar în hero.
                       </p>
                     </div>
                     <div className="story-frame rounded-[1.6rem] px-5 py-5">
-                      <div className="mb-2 font-mono text-[10px] tracking-[0.24em] text-aerflow-gray uppercase">
-                        Motion
+                      <div className="mb-3 flex items-center justify-between gap-3">
+                        <div className="font-mono text-[10px] tracking-[0.24em] text-aerflow-gray uppercase">
+                          Motion cues
+                        </div>
+                        <div className="font-mono text-[10px] tracking-[0.24em] text-aerflow-accent uppercase">
+                          Active
+                        </div>
+                      </div>
+                      <div className="mb-4 flex h-18 items-end gap-2 rounded-[1.1rem] border border-white/8 bg-black/35 px-4 py-3">
+                        <span className="w-2 rounded-full bg-white/30 animate-[ambientPulse_2.2s_ease-in-out_infinite]" style={{ height: '38%' }} />
+                        <span className="w-2 rounded-full bg-aerflow-accent/70 animate-[ambientPulse_2.2s_ease-in-out_infinite]" style={{ height: '58%', animationDelay: '140ms' }} />
+                        <span className="w-2 rounded-full bg-white/40 animate-[ambientPulse_2.2s_ease-in-out_infinite]" style={{ height: '78%', animationDelay: '280ms' }} />
+                        <div className="ml-4 flex-1">
+                          <div className="h-px w-full bg-white/10" />
+                          <div className="mt-3 flex justify-between font-mono text-[9px] tracking-[0.2em] text-aerflow-gray uppercase">
+                            <span>Hero</span>
+                            <span>Page</span>
+                            <span>Scroll</span>
+                          </div>
+                        </div>
                       </div>
                       <p className="text-sm leading-relaxed text-aerflow-light/74">
-                        Tranziții care conectează capitolele fără să afecteze claritatea și ritmul.
+                        Reveal pe headline, page transitions și showcase legat de scroll mai jos.
                       </p>
                     </div>
                   </div>
@@ -331,27 +344,6 @@ export default function Home() {
                     </MagneticButton>
                   </div>
                 </div>
-              </div>
-
-              <div className="mt-10 grid gap-4 md:grid-cols-3">
-                {chapterSignals.map((signal, index) => (
-                  <motion.div
-                    key={signal.title}
-                    initial={{ opacity: 0, y: 40 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.75, delay: 0.22 + index * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                    className="story-frame rounded-[1.5rem] px-5 py-5"
-                  >
-                    <div className="mb-3 flex items-center justify-between gap-4">
-                      <div className="font-mono text-[10px] tracking-[0.22em] text-aerflow-gray uppercase">
-                        0{index + 1}
-                      </div>
-                      <div className="h-px flex-1 bg-white/8" />
-                    </div>
-                    <h2 className="mb-3 text-2xl font-bold uppercase tracking-[-0.04em]">{signal.title}</h2>
-                    <p className="text-sm leading-relaxed text-aerflow-light/70">{signal.text}</p>
-                  </motion.div>
-                ))}
               </div>
             </div>
           </div>
