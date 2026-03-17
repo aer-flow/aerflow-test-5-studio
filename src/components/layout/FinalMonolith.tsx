@@ -142,17 +142,11 @@ export default function FinalMonolith() {
           />
         )}
 
-        {!shouldUseLiteEffects() && (
-          <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden opacity-[0.05]">
-            <motion.div
-              animate={{ x: [0, -1800] }}
-              transition={{ repeat: Infinity, duration: 45, ease: 'linear' }}
-              className="whitespace-nowrap text-[13vw] font-bold uppercase tracking-[-0.08em] text-white"
-            >
-              STORY • SIGNAL • SYSTEM • STORY • SIGNAL • SYSTEM •
-            </motion.div>
+        <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden opacity-[0.04]">
+          <div className="whitespace-nowrap text-[13vw] font-bold uppercase tracking-[-0.08em] text-white">
+            STORY • SIGNAL • SYSTEM • STORY • SIGNAL • SYSTEM •
           </div>
-        )}
+        </div>
 
         <div className="story-frame story-grid relative z-10 flex h-full w-full flex-col overflow-hidden rounded-[2rem] px-6 py-6 md:rounded-[2.6rem] md:px-10 md:py-8">
           <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">

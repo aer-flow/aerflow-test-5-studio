@@ -187,66 +187,35 @@ export default function Home() {
     const section = scrollWrapperRef.current;
     const viewport = scrollViewportRef.current;
     const track = scrollTrackRef.current;
-    const imageCleanups: Array<() => void> = [];
-    let resizeObserver: ResizeObserver | null = null;
-    let scrollDistance = 0;
-    let viewportWidth = 0;
-    let viewportHeight = 0;
-
-    const updatePosition = () => {
-      const sectionTop = section.offsetTop;
-      const currentScroll = window.scrollY || window.pageYOffset;
-      const traveled = Math.min(Math.max(currentScroll - sectionTop, 0), scrollDistance);
-
-      gsap.set(track, {
-        x: -traveled,
+    const ctx = gsap.context(() => {
+      const horizontalTween = gsap.to(track, {
+        x: () => -Math.max(track.scrollWidth - viewport.clientWidth, 0),
+        ease: 'none',
         force3D: true,
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 0.6,
+          invalidateOnRefresh: true,
+          onRefresh: () => {
+            const viewportHeight = viewport.clientHeight || window.innerHeight;
+            const scrollDistance = Math.max(track.scrollWidth - viewport.clientWidth, 0);
+            section.style.height = `${viewportHeight + scrollDistance}px`;
+            viewport.style.height = `${viewportHeight}px`;
+          },
+        },
       });
-    };
 
-    const measure = () => {
-      viewportWidth = viewport.clientWidth || window.innerWidth;
-      viewportHeight = viewport.clientHeight || window.innerHeight;
-      scrollDistance = Math.max(track.scrollWidth - viewportWidth, 0);
-      section.style.height = `${viewportHeight + scrollDistance}px`;
-      viewport.style.height = `${viewportHeight}px`;
-      updatePosition();
-    };
+      ScrollTrigger.refresh();
 
-    const handleRefresh = () => measure();
-    const handleResize = () => measure();
-    const tick = () => updatePosition();
-    const handleImageReady = () => measure();
-
-    measure();
-
-    const images = Array.from(track.querySelectorAll('img'));
-    images.forEach((img) => {
-      if (img.complete) return;
-
-      img.addEventListener('load', handleImageReady);
-      img.addEventListener('error', handleImageReady);
-
-      imageCleanups.push(() => {
-        img.removeEventListener('load', handleImageReady);
-        img.removeEventListener('error', handleImageReady);
-      });
-    });
-
-    resizeObserver = new ResizeObserver(() => measure());
-    resizeObserver.observe(track);
-    resizeObserver.observe(viewport);
-
-    window.addEventListener('resize', handleResize, { passive: true });
-    ScrollTrigger.addEventListener('refresh', handleRefresh);
-    gsap.ticker.add(tick);
+      return () => {
+        horizontalTween.kill();
+      };
+    }, section);
 
     return () => {
-      gsap.ticker.remove(tick);
-      ScrollTrigger.removeEventListener('refresh', handleRefresh);
-      window.removeEventListener('resize', handleResize);
-      resizeObserver?.disconnect();
-      imageCleanups.forEach((cleanup) => cleanup());
+      ctx.revert();
       section.style.height = '';
       viewport.style.height = '';
       gsap.set(track, { clearProps: 'transform' });

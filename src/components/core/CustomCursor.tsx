@@ -111,12 +111,12 @@ export default function CustomCursor() {
       }}
     >
       <motion.div
-        className="absolute rounded-full border backdrop-blur-[2px]"
+        className="absolute rounded-full border"
         initial="hidden"
         animate={isVisible ? variant : 'hidden'}
         variants={ringVariants}
         transition={{ type: 'spring', stiffness: 260, damping: 22, mass: 0.8 }}
-        style={{ boxShadow: '0 0 40px rgba(0,0,0,0.16)' }}
+        style={{ boxShadow: '0 0 18px rgba(0,0,0,0.12)' }}
       />
       <motion.div
         className="absolute rounded-full"
@@ -124,19 +124,6 @@ export default function CustomCursor() {
         animate={isVisible ? variant : 'hidden'}
         variants={coreVariants}
         transition={{ type: 'spring', stiffness: 320, damping: 26, mass: 0.7 }}
-      />
-      <motion.div
-        className="absolute rounded-full blur-2xl"
-        animate={isVisible && variant !== 'hidden' ? { opacity: 0.45, scale: 1 } : { opacity: 0, scale: 0.4 }}
-        transition={{ duration: 0.25, ease: 'easeOut' }}
-        style={{
-          width: variant === 'project' ? 140 : variant === 'menu' ? 92 : 56,
-          height: variant === 'project' ? 140 : variant === 'menu' ? 92 : 56,
-          background:
-            variant === 'project'
-              ? 'radial-gradient(circle, rgba(215,255,107,0.28), rgba(215,255,107,0) 72%)'
-              : 'radial-gradient(circle, rgba(255,255,255,0.18), rgba(255,255,255,0) 72%)',
-        }}
       />
       <motion.span
         initial={{ opacity: 0, scale: 0.8, y: 8 }}
